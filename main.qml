@@ -6,6 +6,7 @@ import QtQml.Models 2.3
 import QtQuick.Controls 1.4
 import QtQuick.Layouts 1.3
 
+import cpp.AppEngine 12.34
 import cpp.QJsonModel 12.34
 
 Window {
@@ -73,7 +74,8 @@ Window {
             anchors.bottom: parent.bottom
             anchors.margins: space
             anchors.leftMargin: 0
-            model: jsonModel
+            model: appEngine.jsonModel()
+            selection: appEngine.selectionJsonModel()
             TableViewColumn {
                 title: "key"
                 role: "key"
