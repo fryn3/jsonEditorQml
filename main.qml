@@ -74,7 +74,7 @@ Window {
             selection: ItemSelectionModel {
                 model: appEngine.jsonModel()
                 onCurrentChanged: { // current, previous
-                    console.log(model.data(current, QJsonModel.ColKey))
+                    managment.changeFields(current)
                 }
             }
             TableViewColumn {
@@ -106,6 +106,7 @@ Window {
         tableBorderColor: borderColor
         columnWidthFirst: 80
         rowHeight: 60
+        modelSourse: appEngine.jsonModel()
     }
 
 
