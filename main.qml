@@ -2,8 +2,11 @@ import QtQuick 2.9
 import QtQuick.Window 2.15
 import QtQml 2.3
 import QtQml.Models 2.3
-import QtQuick.Controls 2.15
+//import QtQuick.Controls 2.15
+import QtQuick.Controls 1.4
 import QtQuick.Layouts 1.3
+
+import cpp.QJsonModel 12.34
 
 Window {
     id: root
@@ -61,7 +64,8 @@ Window {
         }
 
         // блок вывода json
-        JsonInputOutput {
+//        JsonInputOutput {
+        TreeView {
             id: item3
             anchors.left: parent.horizontalCenter
             anchors.right: parent.right
@@ -69,10 +73,26 @@ Window {
             anchors.bottom: parent.bottom
             anchors.margins: space
             anchors.leftMargin: 0
-            border {
-                width: borderWidth
-                color: borderColor
+            model: jsonModel
+            TableViewColumn {
+                title: "key"
+                role: "key"
+                width: 100
             }
+            TableViewColumn {
+                title: "value"
+                role: "value"
+                width: 100
+            }
+            TableViewColumn {
+                title: "type"
+                role: "type"
+                width: 100
+            }
+//            border {
+//                width: borderWidth
+//                color: borderColor
+//            }
         }
     }
 
