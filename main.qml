@@ -75,7 +75,12 @@ Window {
             anchors.margins: space
             anchors.leftMargin: 0
             model: appEngine.jsonModel()
-            selection: appEngine.selectionJsonModel()
+            selection: ItemSelectionModel {
+                model: appEngine.jsonModel()
+                onCurrentChanged: { // current, previous
+                    console.log(model.data(current, QJsonModel.ColKey))
+                }
+            }
             TableViewColumn {
                 title: "key"
                 role: "key"
@@ -91,10 +96,6 @@ Window {
                 role: "type"
                 width: 100
             }
-//            border {
-//                width: borderWidth
-//                color: borderColor
-//            }
         }
     }
 
