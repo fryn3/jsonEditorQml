@@ -1,0 +1,10 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>ButtonBlock.qml</file>
+        <file>JsonInputOutput.qml</file>
+        <file>ManagmentBlock.qml</file>
+        <file>MenuBlock.qml</file>
+        <file>images/jsoneditor_logo.svg</file>
+    </qresource>
+</RCC>
