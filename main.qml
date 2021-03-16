@@ -28,7 +28,7 @@ Window {
 
     // строка меню
     MenuBlock {
-        id: item1
+        id: menu
         spacing: space
         leftPadding: space
         topPadding: space
@@ -40,19 +40,15 @@ Window {
     }
 
     Item {
-        id: row
+        id: jsonItem
         anchors.left: parent.left
-        anchors.right: item4.left
-        anchors.top: item1.bottom
+        anchors.right: managment.left
+        anchors.top: menu.bottom
         anchors.bottom: parent.bottom
-        Component.onCompleted: {
-            console.log(row.width)
-            console.log(row.height)
-        }
 
         // блок ввода jsom
         JsonInputOutput {
-            id: item2
+            id: jsonText
             anchors.left: parent.left
             anchors.right: parent.horizontalCenter
             anchors.top: parent.top
@@ -67,7 +63,7 @@ Window {
         // блок вывода json
 //        JsonInputOutput {
         TreeView {
-            id: item3
+            id: jsonTree
             anchors.left: parent.horizontalCenter
             anchors.right: parent.right
             anchors.top: parent.top
@@ -101,8 +97,8 @@ Window {
 
     // блок управления
     ManagmentBlock {
-        id: item4
-        anchors.top: item1.bottom
+        id: managment
+        anchors.top: menu.bottom
         anchors.right: parent.right
         anchors.margins: space
 
@@ -117,9 +113,9 @@ Window {
     Image {
         id: logo
 
-        anchors.top: item4.bottom
-        anchors.bottom: item5.top
-        anchors.left: item4.left
+        anchors.top: managment.bottom
+        anchors.bottom: buttonsBlock.top
+        anchors.left: managment.left
         anchors.right: parent.right
         anchors.margins: space
 
@@ -130,7 +126,7 @@ Window {
 
     // блок потомки родственники
     ButtonBlock {
-        id: item5
+        id: buttonsBlock
 
         anchors {
             right: parent.right
@@ -138,7 +134,7 @@ Window {
             margins: space
         }
 
-        width: item4.width
+        width: managment.width
         height: 60
         tableBorderWidth: 1
         tableBorderColor: borderColor
