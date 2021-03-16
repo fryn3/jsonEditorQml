@@ -11,6 +11,8 @@ SOURCES += \
 
 RESOURCES += qml.qrc
 
+include(QJsonModel/QJsonModel.pri)
+
 # Additional import path used to resolve QML modules in Qt Creator's code model
 QML_IMPORT_PATH =
 

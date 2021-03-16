@@ -1,0 +1,3 @@
+[submodule "QJsonModel"]
+	path = QJsonModel
+	url = https://github.com/fryn3/QJsonModel.git
