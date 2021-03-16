@@ -36,6 +36,6 @@ QJsonModel *AppEngine::jsonModel() {
     return &_jsonModel;
 }
 
-QItemSelectionModel *AppEngine::selectionModel() {
+QItemSelectionModel *AppEngine::selectionJsonModel() {
     return &_selectionModel;
 }
