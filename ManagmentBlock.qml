@@ -4,6 +4,14 @@ import QtQuick.Controls 2.15
 import cpp.QJsonModel 12.34
 
 Item {
+    property var typesList: [ "Null", "Bool", "Number", "String", "Array", "Object" ]
+    property int tableBorderWidth
+    property string tableBorderColor: "yellow"
+    property int columnWidthFirst: 60
+    property int columnWidthSecond: 2 * columnWidthFirst
+    property int rowHeight: 40
+    property int fontSize: 10
+
     id: root
     width: columnWidthFirst + columnWidthSecond - 2 + 1 // 2 - кол-во колонок
     height: (column.children.length + 1) * rowHeight - column.children.length
@@ -11,13 +19,7 @@ Item {
     enum TypesEnum {
         Null, Bool, Number, String, Array, Object
     }
-    property var typesList: [ "Null", "Bool", "Number", "String", "Array", "Object" ]
-    property int tableBorderWidth: 2
-    property string tableBorderColor: "yellow"
-    property int columnWidthFirst: 60
-    property int columnWidthSecond: 2 * columnWidthFirst
-    property int rowHeight: 40
-    property int fontSize: 10
+
 
     QtObject {
         id: m
@@ -33,8 +35,8 @@ Item {
         }
         function isEditEnable() {
             _btnEdit.enabled = !(keyText === tfKey.text
-                    && typeEnum === combo.currentIndex
-                    && valueText === tfValue.text)
+                                 && typeEnum === combo.currentIndex
+                                 && valueText === tfValue.text)
         }
     }
 
@@ -67,9 +69,9 @@ Item {
         // не изменяется.
         if (currentIndex.parent.valid
                 && typeOfModelIndex(currentIndex.parent)
-                                === ManagmentBlock.TypesEnum.Array) {
+                === ManagmentBlock.TypesEnum.Array) {
             tfKey.enabled = false
-         } else {
+        } else {
             tfKey.enabled = true
         }
 
@@ -117,6 +119,11 @@ Item {
                     color: textAreaColor
                 }
                 onTextChanged: m.isEditEnable()
+                MouseArea{
+                    anchors.fill: parent
+                    onClicked: { tfKey.focus = true }
+                    onDoubleClicked:  { tfKey.selectAll()}
+                }
             }
         }
         Row {
@@ -187,8 +194,8 @@ Item {
                 height: rowHeight
                 enabled: {
                     (combo.currentIndex === ManagmentBlock.TypesEnum.Bool
-                        || combo.currentIndex === ManagmentBlock.TypesEnum.Number
-                        || combo.currentIndex === ManagmentBlock.TypesEnum.String)
+                     || combo.currentIndex === ManagmentBlock.TypesEnum.Number
+                     || combo.currentIndex === ManagmentBlock.TypesEnum.String)
                 }
 
                 font.pointSize: fontSize
@@ -199,9 +206,16 @@ Item {
                     color: textAreaColor
                 }
                 onTextChanged: m.isEditEnable()
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: { tfValue.focus = true }
+
+                    onDoubleClicked:  { tfValue.selectAll()}
+                }
             }
         }
     }
+
 
     Button {
         id: _btnEdit
@@ -218,6 +232,6 @@ Item {
             border.color: tableBorderColor
             border.width: tableBorderWidth
         }
-//        enabled: m.isEditEnable()
+        //        enabled: m.isEditEnable()
     }
 }
