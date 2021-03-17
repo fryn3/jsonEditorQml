@@ -33,8 +33,8 @@ Item {
         }
         function isEditEnable() {
             _btnEdit.enabled = !(keyText === tfKey.text
-                    && typeEnum === combo.currentIndex
-                    && valueText === tfValue.text)
+                                 && typeEnum === combo.currentIndex
+                                 && valueText === tfValue.text)
         }
     }
 
@@ -67,9 +67,9 @@ Item {
         // не изменяется.
         if (currentIndex.parent.valid
                 && typeOfModelIndex(currentIndex.parent)
-                                === ManagmentBlock.TypesEnum.Array) {
+                === ManagmentBlock.TypesEnum.Array) {
             tfKey.enabled = false
-         } else {
+        } else {
             tfKey.enabled = true
         }
 
@@ -218,6 +218,6 @@ Item {
             border.color: tableBorderColor
             border.width: tableBorderWidth
         }
-//        enabled: m.isEditEnable()
+        //        enabled: m.isEditEnable()
     }
 }
