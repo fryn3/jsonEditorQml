@@ -7,6 +7,7 @@ Row {
     property variant menuItems: ["Open", "Save", "Close", "Auto", "Synchronise"]
     property int btnBorderWidth: 2
     property string btnBorderColor: "blue"
+    property int fontSize: 10
     signal menuClicked(string text)
     signal menuIndClicked(int index)
 
@@ -21,7 +22,7 @@ Row {
             }
             contentItem:  Text {
                 text: menuItems[index]
-                font.pointSize: fontPointSize
+                font.pointSize: fontSize
             }
             onClicked: {
                 menuClicked(menuItems[index])

@@ -34,6 +34,7 @@ Window {
         topPadding: space
         btnBorderWidth: root.borderWidth
         btnBorderColor: borderColor
+        fontSize: fontPointSize
         onMenuClicked: {
             console.log("menuClicked: " + text)
         }
@@ -139,6 +140,7 @@ Window {
         height: 60
         tableBorderWidth: 1
         tableBorderColor: borderColor
+        fontSize: fontPointSize
 
         onClickedChild: {
             console.log("add child")

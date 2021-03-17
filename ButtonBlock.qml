@@ -7,13 +7,15 @@ Item {
     signal clickedSibling()
     property int tableBorderWidth: 2
     property string tableBorderColor: "yellow"
+    property int fontSize: 10
+
     Button {
         id: addChild
         anchors.left: parent.left
         width: parent.width / 2
         height: parent.height
         text: "Add Child"
-        font.pointSize: fontPointSize
+        font.pointSize: fontSize
 
         background: Rectangle {
             opacity: enabled ? 1 : 0.3
@@ -35,7 +37,7 @@ Item {
         width: parent.width / 2
         height: parent.height
         text: "Add Sibling"
-        font.pointSize: fontPointSize
+        font.pointSize: fontSize
 
         background: Rectangle {
             opacity: enabled ? 1 : 0.3
