@@ -19,30 +19,44 @@ Item {
     property int columnWidthSecond: 2 * columnWidthFirst
     property int rowHeight: 40
 
+    function typeOfModelIndex(i) {
+        if (modelSourse === "") {
+            console.assert('bad model')
+            return
+        }
+        var _value = modelSourse.data(i, QJsonModel.ColValue)
+        var _type = modelSourse.data(i, QJsonModel.ColType)
+        if (_type.startsWith('Object')) {
+            return ManagmentBlock.TypesEnum.Object
+        } else if (_type.startsWith('Array')) {
+            return ManagmentBlock.TypesEnum.Array
+        } else if (!_value) {
+            return ManagmentBlock.TypesEnum.Null
+        } else if (typeof _value === "number") {
+            return ManagmentBlock.TypesEnum.Double
+        } else if (typeof _value === "string") {
+            return ManagmentBlock.TypesEnum.String
+        } else if (typeof _value === "boolean") {
+            return ManagmentBlock.TypesEnum.Bool
+        }
+        console.assert('unknow type')
+    }
+
     function changeFields(currentIndex) {
         tfKey.text = modelSourse.data(currentIndex, QJsonModel.ColKey)
-        var _value = modelSourse.data(currentIndex, QJsonModel.ColValue)
-        tfValue.text = _value ?? ""
-        var _type = modelSourse.data(currentIndex, QJsonModel.ColType)
-        if (_type.startsWith('Object')) {
-            combo.currentIndex = ManagmentBlock.TypesEnum.Object
-        } else if (_type.startsWith('Array')) {
-            combo.currentIndex = ManagmentBlock.TypesEnum.Array
-        } else if (!_value) {
-            combo.currentIndex = ManagmentBlock.TypesEnum.Null
-        } else if (typeof _value === "number") {
-            combo.currentIndex = ManagmentBlock.TypesEnum.Double
-        } else if (typeof _value === "string") {
-            combo.currentIndex = ManagmentBlock.TypesEnum.String
-        } else if (typeof _value === "boolean") {
-            combo.currentIndex = ManagmentBlock.TypesEnum.Bool
+        // Если родитель имеет тип Array, то ключ currentIndex (индекс)
+        // не изменяется.
+        if (currentIndex.parent.valid
+                && typeOfModelIndex(currentIndex.parent)
+                                === ManagmentBlock.TypesEnum.Array) {
+            tfKey.enabled = false
+         } else {
+            tfKey.enabled = true
         }
 
-        console.log(modelSourse.data(currentIndex, QJsonModel.ColValue))
-        console.log(modelSourse.data(currentIndex, QJsonModel.ColType))
-        console.log(typeof modelSourse.data(currentIndex, QJsonModel.ColType))
-        console.log(modelSourse.data(currentIndex, QJsonModel.ColType).startsWith('Object'))
-        console.log(modelSourse.data(currentIndex, QJsonModel.ColType).startsWith('Array'))
+        tfValue.text = modelSourse.data(currentIndex, QJsonModel.ColValue) ?? ""
+
+        combo.currentIndex = typeOfModelIndex(currentIndex)
     }
 
     Column {
