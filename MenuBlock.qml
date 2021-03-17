@@ -27,6 +27,9 @@ Row {
             onClicked: {
                 menuClicked(menuItems[index])
                 menuIndClicked(index)
+                if(menuItems[index] === 'Open'){
+                    console.log("Open button pushed")
+                }
             }
         }
     }
