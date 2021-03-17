@@ -4,11 +4,10 @@ import QtQuick.Controls 2.15
 import cpp.QJsonModel 12.34
 
 Item {
-    id: item4Rect
-
-    width: columnWidthFirst + columnWidthSecond
-    height: column.children.length * rowHeight
-    property var modelSourse: ""
+    id: root
+    width: columnWidthFirst + columnWidthSecond - 2 + 1 // 2 - кол-во колонок
+    height: (column.children.length + 1) * rowHeight - column.children.length
+    property var modelSourse: null
     enum TypesEnum {
         Null, Bool, Number, String, Array, Object
     }
@@ -18,9 +17,29 @@ Item {
     property int columnWidthFirst: 60
     property int columnWidthSecond: 2 * columnWidthFirst
     property int rowHeight: 40
+    property int fontSize: 10
+
+    QtObject {
+        id: m
+        property string keyText: ""
+        property int typeEnum: ManagmentBlock.TypesEnum.Null
+        property string valueText: ""
+
+        function saveValues() {
+            keyText = tfKey.text
+            typeEnum = combo.currentIndex
+            valueText = tfValue.text
+            isEditEnable()
+        }
+        function isEditEnable() {
+            _btnEdit.enabled = !(keyText === tfKey.text
+                    && typeEnum === combo.currentIndex
+                    && valueText === tfValue.text)
+        }
+    }
 
     function typeOfModelIndex(i) {
-        if (modelSourse === "") {
+        if (!modelSourse) {
             console.assert('bad model')
             return
         }
@@ -42,7 +61,7 @@ Item {
         console.assert('unknow type')
     }
 
-    function changeFields(currentIndex) {
+    function changedCurrentIndex(currentIndex) {
         tfKey.text = modelSourse.data(currentIndex, QJsonModel.ColKey)
         // Если родитель имеет тип Array, то ключ currentIndex (индекс)
         // не изменяется.
@@ -54,9 +73,9 @@ Item {
             tfKey.enabled = true
         }
 
-        tfValue.text = modelSourse.data(currentIndex, QJsonModel.ColValue) ?? ""
-
+        tfValue.text = modelSourse.data(currentIndex, QJsonModel.ColValue) ?? "";
         combo.currentIndex = typeOfModelIndex(currentIndex)
+        m.saveValues()
     }
 
     Column {
@@ -76,9 +95,9 @@ Item {
                     anchors.fill: parent
                     anchors.margins: space
                     verticalAlignment: Text.AlignVCenter
-                    id: keyText
+                    id: _textKey
                     text: qsTr("Key")
-                    font.pointSize: fontPointSize
+                    font.pointSize: fontSize
                 }
                 MouseArea {
                     anchors.fill: parent
@@ -90,13 +109,14 @@ Item {
                 width: columnWidthSecond
                 height: rowHeight
 
-                font.pointSize: fontPointSize
+                font.pointSize: fontSize
                 focus: true
                 background: Rectangle {
                     border.color: tableBorderColor
                     border.width: tableBorderWidth
                     color: textAreaColor
                 }
+                onTextChanged: m.isEditEnable()
             }
         }
         Row {
@@ -114,7 +134,7 @@ Item {
                     anchors.margins: space
                     verticalAlignment: Text.AlignVCenter
                     text: qsTr("Type")
-                    font.pointSize: fontPointSize
+                    font.pointSize: fontSize
                 }
                 MouseArea {
                     anchors.fill: parent
@@ -128,13 +148,14 @@ Item {
                 height: rowHeight
                 focus: true
                 editable: false
-                font.pointSize: fontPointSize
+                font.pointSize: fontSize
                 model: typesList
                 background: Rectangle {
                     border.color: tableBorderColor
                     border.width: tableBorderWidth
                     color: textAreaColor
                 }
+                onCurrentIndexChanged: m.isEditEnable()
             }
         }
         Row {
@@ -151,9 +172,9 @@ Item {
                     anchors.fill: parent
                     anchors.margins: space
                     verticalAlignment: Text.AlignVCenter
-                    id: valueText
+                    id: _textValue
                     text: qsTr("Value")
-                    font.pointSize: fontPointSize
+                    font.pointSize: fontSize
                 }
                 MouseArea {
                     anchors.fill: parent
@@ -170,14 +191,33 @@ Item {
                         || combo.currentIndex === ManagmentBlock.TypesEnum.String)
                 }
 
-                font.pointSize: fontPointSize
+                font.pointSize: fontSize
                 focus: true
                 background: Rectangle {
                     border.color: tableBorderColor
                     border.width: tableBorderWidth
                     color: textAreaColor
                 }
+                onTextChanged: m.isEditEnable()
             }
         }
+    }
+
+    Button {
+        id: _btnEdit
+        anchors.left: parent.left
+        anchors.right: parent.right
+        anchors.top: column.bottom
+        anchors.topMargin: -1
+        height: rowHeight
+        text: "Edit"
+        font.pointSize: fontSize
+        background: Rectangle {
+            opacity: enabled ? 1 : 0.3
+            color: parent.down ? "#d0d0d0" : "#e0e0e0"
+            border.color: tableBorderColor
+            border.width: tableBorderWidth
+        }
+//        enabled: m.isEditEnable()
     }
 }

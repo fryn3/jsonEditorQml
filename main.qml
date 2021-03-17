@@ -75,7 +75,7 @@ Window {
             selection: ItemSelectionModel {
                 model: appEngine.jsonModel()
                 onCurrentChanged: { // current, previous
-                    managment.changeFields(current)
+                    managment.changedCurrentIndex(current)
                 }
             }
             TableViewColumn {
@@ -105,8 +105,10 @@ Window {
 
         tableBorderWidth: borderWidth
         tableBorderColor: borderColor
-        columnWidthFirst: 80
-        rowHeight: 60
+        columnWidthFirst: 70
+        columnWidthSecond: 170
+        rowHeight: 40
+        fontSize: fontPointSize
         modelSourse: appEngine.jsonModel()
     }
 
