@@ -33,7 +33,7 @@ Item {
         } else if (!_value) {
             return ManagmentBlock.TypesEnum.Null
         } else if (typeof _value === "number") {
-            return ManagmentBlock.TypesEnum.Double
+            return ManagmentBlock.TypesEnum.Number
         } else if (typeof _value === "string") {
             return ManagmentBlock.TypesEnum.String
         } else if (typeof _value === "boolean") {
