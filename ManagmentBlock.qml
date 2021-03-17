@@ -10,9 +10,9 @@ Item {
     height: column.children.length * rowHeight
     property var modelSourse: ""
     enum TypesEnum {
-        Null, Bool, Double, String, Array, Object
+        Null, Bool, Number, String, Array, Object
     }
-    property var typesList: [ "Null", "Bool", "Double", "String", "Array", "Object" ]
+    property var typesList: [ "Null", "Bool", "Number", "String", "Array", "Object" ]
     property int tableBorderWidth: 2
     property string tableBorderColor: "yellow"
     property int columnWidthFirst: 60
@@ -164,6 +164,11 @@ Item {
                 id: tfValue
                 width: columnWidthSecond
                 height: rowHeight
+                enabled: {
+                    (combo.currentIndex === ManagmentBlock.TypesEnum.Bool
+                        || combo.currentIndex === ManagmentBlock.TypesEnum.Number
+                        || combo.currentIndex === ManagmentBlock.TypesEnum.String)
+                }
 
                 font.pointSize: fontPointSize
                 focus: true
