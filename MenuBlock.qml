@@ -5,24 +5,6 @@ import Qt.labs.platform 1.1
 import QtQuick.Window 2.15
 
 
-Item {
-    id: name
-    MenuItem {
-        text: "Open..."
-        onTriggered: fileDialog.open()
-    }
-
-    FileDialog {
-        id: fileDialog
-        currentFile: document.source
-        folder: StandardPaths.writableLocation(StandardPaths.DocumentsLocation)
-    }
-
-    MyDocument {
-        id: document
-        source: fileDialog.file
-    }
-}
 
 Row {
     id: rowMenu
@@ -52,8 +34,13 @@ Row {
                 menuIndClicked(index)
                 if(menuItems[index] === 'Open'){
                     console.log("Open button pushed")
+                    openFileDialog.open()
                 }
             }
         }
+    }
+    FileDialog {
+        id: openFileDialog
+        nameFilters: ["Text files {*.txt *.json *.csv}"]
     }
 }
