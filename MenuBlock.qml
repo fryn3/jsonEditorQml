@@ -5,27 +5,9 @@ import Qt.labs.platform 1.1
 import QtQuick.Window 2.15
 
 
-Item {
-    id: name
-    MenuItem {
-        text: "Open..."
-        onTriggered: fileDialog.open()
-    }
-
-    FileDialog {
-        id: fileDialog
-        currentFile: document.source
-        folder: StandardPaths.writableLocation(StandardPaths.DocumentsLocation)
-    }
-
-    MyDocument {
-        id: document
-        source: fileDialog.file
-    }
-}
 
 Row {
-    id: rowMenu
+    id: root
 
     property variant menuItems: ["Open", "Save", "Close", "Auto", "Synchronise"]
     property int btnBorderWidth: 2
@@ -33,6 +15,40 @@ Row {
     property int fontSize: 10
     signal menuClicked(string text)
     signal menuIndClicked(int index)
+    property bool _isDirty: true        // Has the document got unsaved changes?
+    property string _fileName           // The filename of the document
+    property bool _tryingToClose: false // Is the window trying to close (but needs a file name first)?
+
+
+    function saveAsDocument() {
+        saveAsDialog.open();
+    }
+
+    function saveDocument() {
+        if (_fileName.length === 0) {
+            root.saveAsDocument();
+        } else {
+            // Save document here
+            console.log("Saving document: ", _fileName)
+            root._isDirty = false;
+
+            if (root._tryingToClose)
+                root.close();
+        }
+    }
+
+    FileDialog {
+        id: saveAsDialog
+        onAccepted: {
+          root._fileName = saveAsDialog.file
+          saveDocument();
+        }
+    }
+
+    FileDialog {
+        id: openFileDialog
+        nameFilters: ["Text files {*.txt *.json *.csv}"]
+    }
 
     Repeater {
         model: menuItems.length
@@ -51,9 +67,13 @@ Row {
                 menuClicked(menuItems[index])
                 menuIndClicked(index)
                 if(menuItems[index] === 'Open'){
-                    console.log("Open button pushed")
+                    openFileDialog.open()
+                }
+                if(menuItems[index] === 'Save'){
+                    root.saveDocument()
                 }
             }
         }
     }
+
 }

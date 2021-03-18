@@ -18,6 +18,8 @@ Window {
     property int space: 10
     property string textAreaColor: "#e9e9e9"
 
+
+
     width: 1000
     minimumWidth: 480
     height: 600
@@ -36,7 +38,7 @@ Window {
         btnBorderColor: borderColor
         fontSize: fontPointSize
         onMenuClicked: {
-            console.log("menuClicked: " + text)
+            console.log(file)
         }
     }
 
