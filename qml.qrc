@@ -6,5 +6,6 @@
         <file>ManagmentBlock.qml</file>
         <file>MenuBlock.qml</file>
         <file>images/jsoneditor_logo.svg</file>
+        <file>MyDocument.qml</file>
     </qresource>
 </RCC>

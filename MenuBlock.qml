@@ -1,5 +1,28 @@
 import QtQuick 2.9
 import QtQuick.Controls 2.15
+import QtQuick.Dialogs 1.3
+import Qt.labs.platform 1.1
+import QtQuick.Window 2.15
+
+
+Item {
+    id: name
+    MenuItem {
+        text: "Open..."
+        onTriggered: fileDialog.open()
+    }
+
+    FileDialog {
+        id: fileDialog
+        currentFile: document.source
+        folder: StandardPaths.writableLocation(StandardPaths.DocumentsLocation)
+    }
+
+    MyDocument {
+        id: document
+        source: fileDialog.file
+    }
+}
 
 Row {
     id: rowMenu
