@@ -1,6 +1,8 @@
 #include "appengine.h"
 #include "myfunc.h"
 
+#include <QFile>
+
 const QString AppEngine::ITEM_NAME = "AppEngine";
 const bool AppEngine::IS_QML_REG = My::qmlRegisterType<AppEngine>(AppEngine::ITEM_NAME);
 
@@ -38,4 +40,14 @@ QJsonModel *AppEngine::jsonModel() {
 
 QItemSelectionModel *AppEngine::selectionJsonModel() {
     return &_selectionModel;
+}
+
+bool AppEngine::saveJson(QString fileName) const {
+    QFile f(fileName);
+    if (!f.open(QIODevice::WriteOnly)) {
+        qDebug() << __PRETTY_FUNCTION__ << "can't open file";
+        return false;
+    }
+    f.write(_jsonModel.toByteArray(true));
+    return true;
 }

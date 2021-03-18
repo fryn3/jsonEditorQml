@@ -33,8 +33,10 @@ Row {
                 menuClicked(menuItems[index])
                 menuIndClicked(index)
                 if(menuItems[index] === 'Open'){
-                    console.log("Open button pushed")
                     openFileDialog.open()
+                }
+                if(menuItems[index] === 'Save'){
+                    saveAsItem.saveDocument()
                 }
             }
         }
@@ -42,5 +44,37 @@ Row {
     FileDialog {
         id: openFileDialog
         nameFilters: ["Text files {*.txt *.json *.csv}"]
+    }
+    Item {
+        id: saveAsItem
+        property string _fileName: null
+        function saveAsDocument()
+        {
+            saveAsDialog.open();
+        }
+
+        function saveDocument()
+        {
+            if (_fileName.length === 0)
+            {
+                root.saveAsDocument();
+            }
+            else
+            {
+                // Save document here
+                console.log("Saving document")
+                root._isDirty = false;
+
+                if (root._tryingToClose)
+                    root.close();
+            }
+        }
+        FileDialog {
+            id: saveAsDialog
+            onAccepted: {
+              root._fileName = saveAsDialog.file
+              saveDocument();
+            }
+        }
     }
 }
