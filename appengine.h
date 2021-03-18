@@ -28,6 +28,13 @@ public:
      */
     Q_INVOKABLE QItemSelectionModel *selectionJsonModel();
 
+    /*!
+     * \brief Сохранения модели в файл.
+     * \param fileName - имя файла
+     * \return true, если успешно.
+     */
+    Q_INVOKABLE bool saveJson(QString fileName) const;
+
 private:
     QJsonModel _jsonModel;
     QItemSelectionModel _selectionModel;
