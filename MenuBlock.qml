@@ -50,6 +50,7 @@ Row {
         nameFilters: ["Text files {*.txt *.json *.csv}"]
     }
 
+
     Repeater {
         model: menuItems.length
         Button {
@@ -66,14 +67,15 @@ Row {
             onClicked: {
                 menuClicked(menuItems[index])
                 menuIndClicked(index)
+
                 if(menuItems[index] === 'Open'){
                     openFileDialog.open()
                 }
+
                 if(menuItems[index] === 'Save'){
                     root.saveDocument()
                 }
             }
         }
-    }
-
+    }    
 }
