@@ -39,6 +39,8 @@ Row {
 
     FileDialog {
         id: saveAsDialog
+        fileMode: FileDialog.SaveFile
+        nameFilters: ["Text files {*.txt *.json *.csv}"]
         onAccepted: {
           root._fileName = saveAsDialog.file
           saveDocument();
@@ -47,6 +49,7 @@ Row {
 
     FileDialog {
         id: openFileDialog
+        fileMode: FileDialog.OpenFile
         nameFilters: ["Text files {*.txt *.json *.csv}"]
     }
 
