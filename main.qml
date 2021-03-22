@@ -37,9 +37,6 @@ Window {
         btnBorderWidth: root.borderWidth
         btnBorderColor: borderColor
         fontSize: fontPointSize
-        onMenuClicked: {
-            console.log(this)
-        }
     }
 
     Item {
