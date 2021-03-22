@@ -51,3 +51,8 @@ bool AppEngine::saveJson(QString fileName) const {
     f.write(_jsonModel.toByteArray(true));
     return true;
 }
+
+bool AppEngine::openJson(QString fileName) const {
+    qDebug() << __PRETTY_FUNCTION__ << fileName;
+    return true;
+}

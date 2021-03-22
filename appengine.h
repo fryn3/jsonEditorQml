@@ -35,8 +35,12 @@ public:
      */
     Q_INVOKABLE bool saveJson(QString fileName) const;
 
+    Q_INVOKABLE bool openJson(QString fileName) const;
+
+
 private:
     QJsonModel _jsonModel;
     QItemSelectionModel _selectionModel;
+
 };
 

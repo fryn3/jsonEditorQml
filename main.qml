@@ -38,7 +38,7 @@ Window {
         btnBorderColor: borderColor
         fontSize: fontPointSize
         onMenuClicked: {
-            console.log(file)
+            console.log(this)
         }
     }
 
