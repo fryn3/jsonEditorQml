@@ -43,6 +43,7 @@ QItemSelectionModel *AppEngine::selectionJsonModel() {
 }
 
 bool AppEngine::saveJson(QString fileName) const {
+    qDebug() << __PRETTY_FUNCTION__ << fileName;
     QFile f(fileName);
     if (!f.open(QIODevice::WriteOnly)) {
         qDebug() << __PRETTY_FUNCTION__ << "can't open file";
@@ -50,4 +51,9 @@ bool AppEngine::saveJson(QString fileName) const {
     }
     f.write(_jsonModel.toByteArray(true));
     return true;
+}
+
+bool AppEngine::openJson(QString fileName) {
+    qDebug() << __PRETTY_FUNCTION__ << fileName;
+    return _jsonModel.load(fileName);
 }

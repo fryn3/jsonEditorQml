@@ -1,8 +1,7 @@
+import QtQuick.Window 2.15
 import QtQuick 2.9
 import QtQuick.Controls 2.15
-import QtQuick.Dialogs 1.3
 import Qt.labs.platform 1.1
-import QtQuick.Window 2.15
 
 
 
@@ -19,6 +18,7 @@ Row {
     property string _fileName           // The filename of the document
     property bool _tryingToClose: false // Is the window trying to close (but needs a file name first)?
 
+    property string filePath: ""
 
     function saveAsDocument() {
         saveAsDialog.open();
@@ -35,22 +35,6 @@ Row {
             if (root._tryingToClose)
                 root.close();
         }
-    }
-
-    FileDialog {
-        id: saveAsDialog
-        fileMode: FileDialog.SaveFile
-        nameFilters: ["Text files {*.txt *.json *.csv}"]
-        onAccepted: {
-          root._fileName = saveAsDialog.file
-          saveDocument();
-        }
-    }
-
-    FileDialog {
-        id: openFileDialog
-        fileMode: FileDialog.OpenFile
-        nameFilters: ["Text files {*.txt *.json *.csv}"]
     }
 
 
@@ -80,5 +64,29 @@ Row {
                 }
             }
         }
-    }    
+    }
+
+    FileDialog {
+        id: saveAsDialog
+        fileMode:  FileDialog.SaveFile
+        nameFilters: ["Text files {*.txt *.json *.csv}"]
+        onAccepted: {
+            root._fileName = saveAsDialog.file
+            saveDocument();
+        }
+    }
+
+
+    FileDialog {
+        id: openFileDialog
+        fileMode: FileDialog.OpenFile
+        folder: shortcuts.home
+        nameFilters: ["Text files {*.txt *.json *.csv}"]
+        onAccepted: {
+            filePath = openFileDialog.file.toString().substr(8)
+            console.log(filePath)
+            console.log("The type of currentFile is " + typeof(openFileDialog.currentFile))
+
+        }
+    }
 }
