@@ -4,7 +4,6 @@ import QtQuick.Controls 2.15
 import Qt.labs.platform 1.1
 
 
-
 Row {
     id: root
 
@@ -18,18 +17,18 @@ Row {
     property string _fileName           // The filename of the document
     property bool _tryingToClose: false // Is the window trying to close (but needs a file name first)?
 
-    property string filePath: ""
+    property string filePath: ""  // the path of a selected file
 
     function saveAsDocument() {
         saveAsDialog.open();
     }
 
     function saveDocument() {
-        if (_fileName.length === 0) {
+        if (filePath.length === 0) {
             root.saveAsDocument();
         } else {
             // Save document here
-            console.log("Saving document: ", _fileName)
+            console.log("Saving document: ", filePath)
             root._isDirty = false;
 
             if (root._tryingToClose)
@@ -80,13 +79,9 @@ Row {
     FileDialog {
         id: openFileDialog
         fileMode: FileDialog.OpenFile
-        folder: shortcuts.home
         nameFilters: ["Text files {*.txt *.json *.csv}"]
         onAccepted: {
             filePath = openFileDialog.file.toString().substr(8)
-            console.log(filePath)
-            console.log("The type of currentFile is " + typeof(openFileDialog.currentFile))
-
         }
     }
 }
