@@ -18,9 +18,6 @@ Window {
     property int space: 10
     property string textAreaColor: "#e9e9e9"
 
-
-
-
     width: 1000
     minimumWidth: 480
     height: 600
@@ -59,6 +56,8 @@ Window {
                 width: borderWidth
                 color: borderColor
             }
+
+            // копирует текст с правой части на левую
             jsonText: appEngine.jsonModel().toByteArray(true)
         }
 
@@ -74,10 +73,15 @@ Window {
             anchors.margins: space
             anchors.leftMargin: 0
             model: appEngine ? appEngine.jsonModel() : null
+
+            // выделяет строку
+            // current хранит индекс выделенной строки
             selection: ItemSelectionModel {
                 model: appEngine ? appEngine.jsonModel() : null
                 onCurrentChanged: { // current, previous
                     managment.changedCurrentIndex(current)
+
+                    console.log(current)
                 }
             }
             TableViewColumn {
