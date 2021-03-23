@@ -70,9 +70,9 @@ Window {
             anchors.bottom: parent.bottom
             anchors.margins: space
             anchors.leftMargin: 0
-            model: appEngine.jsonModel()
+            model: appEngine ? appEngine.jsonModel() : null
             selection: ItemSelectionModel {
-                model: appEngine.jsonModel()
+                model: appEngine ? appEngine.jsonModel() : null
                 onCurrentChanged: { // current, previous
                     managment.changedCurrentIndex(current)
                 }
@@ -108,7 +108,7 @@ Window {
         columnWidthSecond: 170
         rowHeight: 40
         fontSize: fontPointSize
-        modelSourse: appEngine.jsonModel()
+        modelSourse: appEngine ? appEngine.jsonModel() : ""
     }
 
 
