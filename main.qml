@@ -20,6 +20,7 @@ Window {
 
 
 
+
     width: 1000
     minimumWidth: 480
     height: 600
@@ -48,7 +49,7 @@ Window {
 
         // блок ввода jsom
         JsonInputOutput {
-            id: jsonText
+            id: jsonInput
             anchors.left: parent.left
             anchors.right: parent.horizontalCenter
             anchors.top: parent.top
@@ -58,7 +59,9 @@ Window {
                 width: borderWidth
                 color: borderColor
             }
+            jsonText: appEngine.jsonModel().toByteArray(true)
         }
+
 
         // блок вывода json
 //        JsonInputOutput {

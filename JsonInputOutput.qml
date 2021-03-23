@@ -2,6 +2,7 @@ import QtQuick 2.9
 import QtQuick.Controls 2.15
 
 Rectangle {
+    property alias jsonText: textArea.text
     ScrollView {
         id: scrollView1
         anchors.fill: parent
@@ -14,6 +15,7 @@ Rectangle {
             anchors.bottom: parent.bottom
             text: ""
             font.pointSize: fontPointSize
+            font.family: "Consolas"
             wrapMode: TextEdit.WordWrap
         }
     }
