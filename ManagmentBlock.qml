@@ -249,7 +249,8 @@ Item {
         }
 
         onClicked: {
-            console.log(crtInd)
+            console.log(m.crtInd)
+            console.log(m.crtInd.row)
             console.log(tfValue.text)
         }
 
