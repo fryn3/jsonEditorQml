@@ -9,6 +9,7 @@ import QtQuick.Layouts 1.3
 import cpp.AppEngine 12.34
 import cpp.QJsonModel 12.34
 
+
 Window {
     id: root
     property string projectName: "Json Editor"
@@ -64,7 +65,7 @@ Window {
 
 
         // блок вывода json
-//        JsonInputOutput {
+        //        JsonInputOutput {
         TreeView {
             id: jsonTree
             anchors.left: parent.horizontalCenter
@@ -74,12 +75,17 @@ Window {
             anchors.margins: space
             anchors.leftMargin: 0
             model: appEngine ? appEngine.jsonModel() : null
+
+            // selection выделение строки при нажатии мыши
+            // current возвращает индекс строки
             selection: ItemSelectionModel {
+                id: slction
                 model: appEngine ? appEngine.jsonModel() : null
                 onCurrentChanged: { // current, previous
                     managment.changedCurrentIndex(current)
                 }
             }
+
             TableViewColumn {
                 title: "key"
                 role: "key"
@@ -111,6 +117,8 @@ Window {
         columnWidthSecond: 170
         rowHeight: 40
         fontSize: fontPointSize
+
+        //
         modelSourse: appEngine ? appEngine.jsonModel() : ""
     }
 

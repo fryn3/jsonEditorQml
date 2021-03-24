@@ -14,6 +14,7 @@ int main(int argc, char *argv[])
 
     QQmlApplicationEngine engine;
 
+    /* создание экземпляра модели */
     AppEngine appEngine;
 
     engine.rootContext()->setContextProperty("appEngine", &appEngine);

@@ -12,20 +12,29 @@ Item {
     property int rowHeight: 40
     property int fontSize: 10
 
+
+
+
+
     id: root
     width: columnWidthFirst + columnWidthSecond - 2 + 1 // 2 - кол-во колонок
     height: (column.children.length + 1) * rowHeight - column.children.length
+
+    //
     property var modelSourse: null
     enum TypesEnum {
         Null, Bool, Number, String, Array, Object
     }
 
 
+    //
     QtObject {
         id: m
         property string keyText: ""
         property int typeEnum: ManagmentBlock.TypesEnum.Null
         property string valueText: ""
+
+        property var crtInd: null
 
         function saveValues() {
             keyText = tfKey.text
@@ -64,6 +73,8 @@ Item {
     }
 
     function changedCurrentIndex(currentIndex) {
+       m.crtInd = currentIndex
+
         tfKey.text = modelSourse.data(currentIndex, QJsonModel.ColKey)
         // Если родитель имеет тип Array, то ключ currentIndex (индекс)
         // не изменяется.
@@ -80,6 +91,8 @@ Item {
         m.saveValues()
     }
 
+
+
     Column {
         id: column
         spacing: -tableBorderWidth
@@ -94,12 +107,13 @@ Item {
                 border.width: tableBorderWidth
                 color: textAreaColor
                 Text {
+                    id: _textKey
                     anchors.fill: parent
                     anchors.margins: space
                     verticalAlignment: Text.AlignVCenter
-                    id: _textKey
                     text: qsTr("Key")
                     font.pointSize: fontSize
+                    objectName: "textKey"
                 }
                 MouseArea {
                     anchors.fill: parent
@@ -121,8 +135,8 @@ Item {
                 onTextChanged: m.isEditEnable()
                 MouseArea{
                     anchors.fill: parent
-                    onClicked: { tfKey.focus = true }
-                    onDoubleClicked:  { tfKey.selectAll()}
+                    onClicked: {tfKey.focus = true }
+                    onDoubleClicked:  {tfKey.selectAll()}
                 }
             }
         }
@@ -145,7 +159,7 @@ Item {
                 }
                 MouseArea {
                     anchors.fill: parent
-                    onClicked: { combo.popup.open() }
+                    onClicked: {combo.popup.open() }
                 }
             }
             ComboBox {
@@ -208,9 +222,9 @@ Item {
                 onTextChanged: m.isEditEnable()
                 MouseArea {
                     anchors.fill: parent
-                    onClicked: { tfValue.focus = true }
+                    onClicked: {tfValue.focus = true }
 
-                    onDoubleClicked:  { tfValue.selectAll()}
+                    onDoubleClicked:  {tfValue.selectAll()}
                 }
             }
         }
@@ -218,6 +232,7 @@ Item {
 
 
     Button {
+
         id: _btnEdit
         anchors.left: parent.left
         anchors.right: parent.right
@@ -232,6 +247,12 @@ Item {
             border.color: tableBorderColor
             border.width: tableBorderWidth
         }
+
+        onClicked: {
+            console.log(crtInd)
+            console.log(tfValue.text)
+        }
+
         //        enabled: m.isEditEnable()
     }
 }
