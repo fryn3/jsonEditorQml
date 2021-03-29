@@ -2,9 +2,12 @@ import QtQuick 2.9
 import QtQuick.Window 2.15
 import QtQml 2.3
 import QtQml.Models 2.3
-//import QtQuick.Controls 2.15
 import QtQuick.Controls 1.4
 import QtQuick.Layouts 1.3
+import QtQuick.Controls 2.15
+
+
+
 
 import cpp.AppEngine 12.34
 import cpp.QJsonModel 12.34
@@ -29,6 +32,15 @@ Window {
     color: "#d9d9d9"
     visible: true
     title: qsTr(projectName)
+
+
+About{
+    id: about
+    visible: false
+    anchors.centerIn: parent
+}
+
+
 
     // строка меню
     MenuBlock {
@@ -56,11 +68,30 @@ Window {
             anchors.top: parent.top
             anchors.bottom: parent.bottom
             anchors.margins: space
+
             border {
                 width: borderWidth
                 color: borderColor
             }
-            jsonText: appEngine.jsonModel().toByteArray(true)
+
+            jsonText: {
+                appEngine.jsonModel().toByteArray(true)
+            }
+
+            Component.onCompleted: {
+                jsonTextArea.focus = false
+
+            }
+            MouseArea{
+                anchors.fill: parent
+                onClicked: {
+                    console.log(jsonInput.Text)
+                    jsonInput.jsonTextArea.deselect()
+                }
+                onDoubleClicked: {
+                    jsonInput.jsonTextArea.selectAll()
+                }
+            }
         }
 
 
@@ -126,16 +157,14 @@ Window {
     // логотип
     Image {
         id: logo
-
+        property var xhr: new XMLHttpRequest
         anchors.top: managment.bottom
         anchors.bottom: buttonsBlock.top
         anchors.left: managment.left
         anchors.right: parent.right
         anchors.margins: space
-
         source: "images/jsoneditor_logo.svg"
         fillMode: Image.PreserveAspectFit
-
     }
 
     // блок потомки родственники

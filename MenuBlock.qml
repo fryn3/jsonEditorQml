@@ -7,7 +7,7 @@ import Qt.labs.platform 1.1
 Row {
     id: root
 
-    property variant menuItems: ["Open", "Save", "Close", "Auto", "Synchronise"]
+    property variant menuItems: ["Open", "Save", "Close", "Auto", "Synchronise", "About"]
     property int btnBorderWidth: 2
     property string btnBorderColor: "blue"
     property int fontSize: 10
@@ -18,6 +18,7 @@ Row {
     property bool _tryingToClose: false // Is the window trying to close (but needs a file name first)?
 
     property string filePath: ""  // the path of a selected file
+    property int j: 1
 
     function saveAsDocument() {
         saveAsDialog.open();
@@ -60,6 +61,15 @@ Row {
 
                 if(menuItems[index] === 'Save'){
                     root.saveDocument()
+                }
+                if(menuItems[index] === 'About'){
+                    if (j === 1){
+                        about.visible = true
+                        j = j * -1    }
+                    else{
+                        about.visible = false
+                        j = j * -1
+                    }
                 }
             }
         }

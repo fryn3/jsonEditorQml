@@ -133,11 +133,6 @@ Item {
                     color: textAreaColor
                 }
                 onTextChanged: m.isEditEnable()
-                MouseArea{
-                    anchors.fill: parent
-                    onClicked: {tfKey.focus = true }
-                    onDoubleClicked:  {tfKey.selectAll()}
-                }
             }
         }
         Row {
@@ -223,8 +218,6 @@ Item {
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {tfValue.focus = true }
-
-                    onDoubleClicked:  {tfValue.selectAll()}
                 }
             }
         }
