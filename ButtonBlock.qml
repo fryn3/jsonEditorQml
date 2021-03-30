@@ -26,6 +26,7 @@ Item {
 
         onClicked: {
             root.clickedChild()
+            console.log()
         }
     }
 
