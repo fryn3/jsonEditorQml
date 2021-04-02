@@ -8,5 +8,6 @@
         <file>images/jsoneditor_logo.svg</file>
         <file>images/about.txt</file>
         <file>About.qml</file>
+        <file>images/jsoneditor_logo_pressed.svg</file>
     </qresource>
 </RCC>

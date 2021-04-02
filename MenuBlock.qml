@@ -18,7 +18,7 @@ Row {
     property bool _tryingToClose: false // Is the window trying to close (but needs a file name first)?
 
     property string filePath: ""  // the path of a selected file
-    property int j: 1
+
 
     function saveAsDocument() {
         saveAsDialog.open();
@@ -43,6 +43,7 @@ Row {
         Button {
             id: control
             background: Rectangle {
+                id: menuButtonRect
                 border.width: btnBorderWidth
                 border.color: btnBorderColor
                 color: control.down ? "#d0d0d0" : "#e0e0e0"
@@ -51,9 +52,11 @@ Row {
                 text: menuItems[index]
                 font.pointSize: fontSize
             }
+
             onClicked: {
                 menuClicked(menuItems[index])
                 menuIndClicked(index)
+                menuButtonRect.color = "lightgray"
 
                 if(menuItems[index] === 'Open'){
                     openFileDialog.open()
@@ -63,12 +66,17 @@ Row {
                     root.saveDocument()
                 }
                 if(menuItems[index] === 'About'){
-                    if (j === 1){
+                    if (switcher === 1){
                         about.visible = true
-                        j = j * -1    }
+                        switcher = switcher * -1
+                        logo.source = "images/jsoneditor_logo_pressed.svg"
+                    }
+
                     else{
                         about.visible = false
-                        j = j * -1
+                        switcher = switcher * -1
+                        logo.source = "images/jsoneditor_logo.svg"
+                        menuButtonRect.color = "#e0e0e0"
                     }
                 }
             }

@@ -22,6 +22,8 @@ Window {
     property int space: 10
     property string textAreaColor: "#e9e9e9"
 
+    property int switcher: 1
+
 
 
 
@@ -34,11 +36,11 @@ Window {
     title: qsTr(projectName)
 
 
-About{
-    id: about
-    visible: false
-    anchors.centerIn: parent
-}
+    About{
+        id: about
+        visible: false
+        anchors.centerIn: parent
+    }
 
 
 
@@ -158,14 +160,41 @@ About{
     Image {
         id: logo
         property var xhr: new XMLHttpRequest
-        anchors.top: managment.bottom
-        anchors.bottom: buttonsBlock.top
-        anchors.left: managment.left
-        anchors.right: parent.right
-        anchors.margins: space
+        anchors{
+            top: managment.bottom
+            bottom: buttonsBlock.top
+            left: managment.left
+            right: parent.right
+            margins: space
+        }
         source: "images/jsoneditor_logo.svg"
         fillMode: Image.PreserveAspectFit
+
+        scale: aboutMouseArea.containsMouse ? 0.9 : 1
+
+        MouseArea{
+            id: aboutMouseArea
+            anchors.fill: parent
+            property int j: 1
+            // source: aboutMouseArea.pressed "images/jsoneditor_logo_pressed.svg" ? : "images/jsoneditor_logo.svg"
+
+            onClicked: {
+                if (switcher === 1){
+                    about.visible = true
+                    switcher = switcher * -1
+                    logo.source = "images/jsoneditor_logo_pressed.svg"
+                }
+
+                else{
+                    about.visible = false
+                    switcher = switcher * -1
+                    logo.source = "images/jsoneditor_logo.svg"
+                }
+            }
+        }
     }
+
+
 
     // блок потомки родственники
     ButtonBlock {
